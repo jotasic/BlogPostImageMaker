@@ -1,10 +1,138 @@
 <!DOCTYPE html>
 <html>
-    <meta charset="utf-8">
+<meta charset="utf-8">
+
 <head>
     <title>Blog Post Image Maker</title>
 </head>
+
 <body>
-    <h1> Hello World!!! </h1>
+    <heder>
+        <h2>Simple Blog Post Image Maker</h2>
+    </heder>
+    <br />
+
+    <!-- text 설정 부분 -->
+    <div class="textContentsArea" id="textContentsArea">
+        <strong>Text:</strong></br>
+        <textarea id="textContents" rows="5" cols="100">Today, I Learned 🤔</textarea>
+    </div>
+    <br />
+
+    <!-- 이미지 size 및 백그라운드 컬러 설정-->
+    <div class="imageOptionArea" id="imageOptionArea">
+        <label for="canvasWidth">Width:</label>
+        <input type="number" id="canvasWidth" value="700"> &nbsp;&nbsp;
+
+        <label for="canvasHeight">Height:</label>
+        <input type="number" id="canvasHeight" value="350"> &nbsp;&nbsp;
+
+        <label for="canvasColor">Background:</label>
+        <input type="color" id="canvasColor" value="#00C800"></br>
+
+    </div>
+    <br />
+
+    <!-- 폰트 관련 설정 부분 -->
+    <div class="fontOptionArea" id="fontOptionArea">
+        <label for="fontSize">Font Size:</label>
+        <input type="number" id="fontSize" value="40"> &nbsp;&nbsp;
+
+        <label for="fontColor">Font Color:</label>
+        <input type="color" id="fontColor" value="#FFFFFF">
+    </div>
+    <br />
+
+    <!-- 미리보기 -->
+    <div class="previewArea" id="previewArea">
+        <strong>Preview:</strong></br>
+        <canvas id="canvasPreview" height="200" width="400">This browser doesn't support canvas 🙅‍♂️ </canvas>
+        </canvas></br>
+
+        <button disabled>Download</button>
+    </div>
+    <br/>
+
+    <footer>
+        <a href="https://github.com/jotasic/BlogPostImageMaker/">Code</a> • Made by <a href="https://velog.io/@burnkim61">taewoo kim</a> • Powered By <a href="https://github.com">Github</a>
+    </footer>
 </body>
+
 </html>
+
+
+<script type="application/javascript">
+    const canvasWidth = document.getElementById('canvasWidth');
+    const canvasHeight = document.getElementById('canvasHeight');
+    const canvasColor = document.getElementById('canvasColor');
+    const contents = document.getElementById('textContents');
+
+    const fontSize = document.getElementById('fontSize');
+    const fontColor = document.getElementById('fontColor');
+    const canvas = document.getElementById("canvasPreview");
+    const context = canvas.getContext("2d");
+
+
+
+
+    // 값이 변경시 updateValue 함수 호출 하도록 설정
+    canvasWidth.addEventListener("change", updateValue);
+    canvasHeight.addEventListener("change", updateValue);
+    canvasColor.addEventListener("change", updateValue);
+    contents.addEventListener("change", updateValue);
+    fontSize.addEventListener("change", updateValue);
+    fontColor.addEventListener("change", updateValue);
+
+    // 이벤트 함수
+    function updateValue(e) {
+        drawCanvas();
+    }
+
+    // 페이지가 로드시 실행
+    window.onload = function () {
+        drawCanvas();
+    }
+
+
+    function drawCanvas() {
+        var w = canvasWidth.value;
+        var h = canvasHeight.value;
+        var c = contents.value;
+
+        console.log(c);
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.beginPath();
+
+        // 캔버스 설정
+        canvas.width = w;
+        canvas.height = h;
+        context.fillStyle = canvasColor.value;
+        context.fillRect(0, 0, w, h);
+        context.fill();
+
+        // Text Style 설정
+        var fontName = "bold " + fontSize.value + "px Arial";
+        context.fillStyle = fontColor.value;
+        context.font = fontName;
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+
+        fillTextLine(context, c, w / 2, h / 2, Number(fontSize.value));
+    }
+    
+    function fillTextLine(context, text, x, y, fontSize) {
+        var lines = text.split("\n");
+        var lineCount = lines.length;
+
+        // 여려줄일 시, 시작(맨 첫줄) y좌표값을 조절 하는 작업
+        y = y - ((lineCount - 1) * fontSize) / 2;
+
+        for (var i = 0; i < lines.length; i++) {
+            context.fillText(lines[i], x, y);
+            y += fontSize + fontSize / 10;
+        }
+    }
+
+
+</script>
