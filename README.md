@@ -4,4 +4,4 @@
 ![Apr-01-2021 23-16-59](https://user-images.githubusercontent.com/8219812/113308421-1cc8a180-9341-11eb-8d20-e2a737cec123.gif)
 
 
-![Site](https://jotasic.github.io/BlogPostImageMaker/)
+[Site](https://jotasic.github.io/BlogPostImageMaker/)
