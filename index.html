@@ -4,6 +4,7 @@
 
 <head>
     <title>Blog Post Image Maker</title>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
 </head>
 
 <body>
@@ -21,14 +22,14 @@
 
     <!-- 이미지 size 및 백그라운드 컬러 설정-->
     <div class="imageOptionArea" id="imageOptionArea">
-        <label for="canvasWidth">Width:</label>
-        <input type="number" id="canvasWidth" value="700"> &nbsp;&nbsp;
+        <label for="imageWidth">Width:</label>
+        <input type="number" id="imageWidth" value="700"> &nbsp;&nbsp;
 
-        <label for="canvasHeight">Height:</label>
-        <input type="number" id="canvasHeight" value="350"> &nbsp;&nbsp;
+        <label for="imageHeight">Height:</label>
+        <input type="number" id="imageHeight" value="350"> &nbsp;&nbsp;
 
-        <label for="canvasColor">Background:</label>
-        <input type="color" id="canvasColor" value="#00C800"></br>
+        <label for="imageColor">Background:</label>
+        <input type="color" id="imageColor" value="#00C800"></br>
 
     </div>
     <br />
@@ -46,15 +47,25 @@
     <!-- 미리보기 -->
     <div class="previewArea" id="previewArea">
         <strong>Preview:</strong></br>
-        <canvas id="canvasPreview" height="200" width="400">This browser doesn't support canvas 🙅‍♂️ </canvas>
+        <svg xmlns=http://www.w3.org/2000/svg xmlns:xlink="http://www.w3.org/1999/xlink" id="imagePreview" height="200"
+            width="400">
+
+            <rect width="100%" height="100%" fill="#ffffff" id="imageBackground" />
+
+
+            <text id="imageText" dominant-baseline="middle" text-anchor="middle">
+            </text>
+            This browser doesn't support svg 🙅‍♂️
+        </svg>
         </br>
 
-        <button disabled>Download</button>
+        <button onclick="downloadImage()">Download</button>
     </div>
-    <br/>
+    <br />
 
     <footer>
-        <a href="https://github.com/jotasic/BlogPostImageMaker/">Code</a> • Made by <a href="https://velog.io/@burnkim61">taewoo kim</a> • Powered By <a href="https://github.com">Github</a>
+        <a href="https://github.com/jotasic/BlogPostImageMaker/">Code</a> • Made by <a
+            href="https://velog.io/@burnkim61">taewoo kim</a> • Powered By <a href="https://github.com">Github</a>
     </footer>
 </body>
 
@@ -62,22 +73,19 @@
 
 
 <script type="application/javascript">
-    const canvasWidth = document.getElementById('canvasWidth');
-    const canvasHeight = document.getElementById('canvasHeight');
-    const canvasColor = document.getElementById('canvasColor');
+    const imageWidth = document.getElementById('imageWidth');
+    const imageHeight = document.getElementById('imageHeight');
+    const imageColor = document.getElementById('imageColor');
     const contents = document.getElementById('textContents');
 
     const fontSize = document.getElementById('fontSize');
     const fontColor = document.getElementById('fontColor');
-    const canvas = document.getElementById("canvasPreview");
-    const context = canvas.getContext("2d");
-
 
 
     // 값이 변경시 updateValue 함수 호출 하도록 설정
-    canvasWidth.addEventListener("change", updateValue);
-    canvasHeight.addEventListener("change", updateValue);
-    canvasColor.addEventListener("change", updateValue);
+    imageWidth.addEventListener("change", updateValue);
+    imageHeight.addEventListener("change", updateValue);
+    imageColor.addEventListener("change", updateValue);
     contents.addEventListener("change", updateValue);
     fontSize.addEventListener("change", updateValue);
     fontColor.addEventListener("change", updateValue);
@@ -89,49 +97,100 @@
 
     // 페이지가 로드시 실행
     window.onload = function () {
+
         drawCanvas();
     }
 
 
     function drawCanvas() {
-        var w = canvasWidth.value;
-        var h = canvasHeight.value;
+        var w = imageWidth.value;
+        var h = imageHeight.value;
         var c = contents.value;
 
-        console.log(c);
+        // Image View 설정
+        // id가 imagePreview SVG로 변환한다.
+        var imagePreview = SVG("#imagePreview");
+        imagePreview.size(w, h);
 
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.beginPath();
+        //Text Style 설정
+        // id가 imageBackground SVG로 변환한다.
+        var imageBackground = SVG("#imageBackground");
+        imageBackground.fill(imageColor.value);
 
-        // 캔버스 설정
-        canvas.width = w;
-        canvas.height = h;
-        context.fillStyle = canvasColor.value;
-        context.fillRect(0, 0, w, h);
-        context.fill();
+        // font 설정
+        // id가 imageText를 SVG로 변환한다.
+        var imageText = SVG("#imageText");
+        imageText.font("weight", "bold");
+        imageText.font("size", fontSize.value);
+        imageText.fill(fontColor.value);
 
-        // Text Style 설정
-        var fontName = "bold " + fontSize.value + "px Arial";
-        context.fillStyle = fontColor.value;
-        context.font = fontName;
-        context.textAlign = "center";
-        context.textBaseline = "middle";
 
-        fillTextLine(context, c, w / 2, h / 2, Number(fontSize.value));
+        fillTextLine(imageText, c, w / 2, h / 2);
+
     }
-    
-    function fillTextLine(context, text, x, y, fontSize) {
+
+    function fillTextLine(el, text, x, y) {
+
         var lines = text.split("\n");
         var lineCount = lines.length;
+        var fontSize = el.font("size");
 
         // 여려줄일 시, 시작(맨 첫줄) y좌표값을 조절 하는 작업
-        y = y - ((lineCount - 1) * fontSize) / 2;
+        var offset = (lineCount - 1) * fontSize / 2;
 
-        for (var i = 0; i < lines.length; i++) {
-            context.fillText(lines[i], x, y);
-            y += fontSize + fontSize / 10;
-        }
+        el.text(function (add) {
+            for (var i = 0; i < lineCount; i++)
+                add.tspan(lines[i]).ax(x).ay(y + i * fontSize - offset);
+        });
     }
 
 
+
+    //https://stackoverflow.com/questions/28226677/save-inline-svg-as-jpeg-png-svg
+
+    function triggerDownload(imgURI) {
+        var evt = new MouseEvent('click', {
+            view: window,
+            bubbles: false,
+            cancelable: true
+        });
+
+        var a = document.createElement('a');
+        a.setAttribute('download', 'MY_COOL_IMAGE.png');
+        a.setAttribute('href', imgURI);
+        a.setAttribute('target', '_blank');
+
+        a.dispatchEvent(evt);
+    }
+
+
+    function downloadImage(){
+        var canvas = document.createElement("canvas");
+        var svg = document.getElementById("imagePreview");
+
+        canvas.width = svg.getBoundingClientRect().width;
+        canvas.height = svg.getBoundingClientRect().height;
+
+        console.log(svg.getBoundingClientRect().width);
+        var ctx = canvas.getContext('2d');
+
+        var data = (new XMLSerializer()).serializeToString(svg);
+        var DOMURL = window.URL || window.webkitURL || window;
+
+        var img = new Image();
+        var svgBlob = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
+        var url = DOMURL.createObjectURL(svgBlob);
+
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0);
+            DOMURL.revokeObjectURL(url);
+
+            var imgURI = canvas
+                .toDataURL('image/png')
+                .replace('image/png', 'image/octet-stream');
+
+            triggerDownload(imgURI);
+        };
+        img.src = url;
+    }
 </script>
