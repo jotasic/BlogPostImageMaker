@@ -5,6 +5,7 @@
 <head>
     <title>Blog Post Image Maker</title>
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+
 </head>
 
 <body>
@@ -60,6 +61,7 @@
         </br>
 
         <button onclick="downloadImage()">Download</button>
+        <button onclick="copyImageToClipboard()">Copy</button>
     </div>
     <br />
 
@@ -147,6 +149,15 @@
 
 
     //https://stackoverflow.com/questions/28226677/save-inline-svg-as-jpeg-png-svg
+    function downloadImage() {
+        convertImageAfterAction(function(canvas) {
+            var imgURI = canvas
+                .toDataURL('image/png')
+                .replace('image/png', 'image/octet-stream');
+
+                triggerDownload(imgURI);
+        });
+    }
 
     function triggerDownload(imgURI) {
         var evt = new MouseEvent('click', {
@@ -164,14 +175,23 @@
     }
 
 
-    function downloadImage(){
-        var canvas = document.createElement("canvas");
+    function copyImageToClipboard() {
+        convertImageAfterAction(function (canvas) {
+            canvas.toBlob(function (blob) {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard.write([item]);
+            });
+        });
+    }
+
+
+    function convertImageAfterAction(callback) {
         var svg = document.getElementById("imagePreview");
+        var canvas = document.createElement("canvas");
 
         canvas.width = svg.getBoundingClientRect().width;
         canvas.height = svg.getBoundingClientRect().height;
 
-        console.log(svg.getBoundingClientRect().width);
         var ctx = canvas.getContext('2d');
 
         var data = (new XMLSerializer()).serializeToString(svg);
@@ -184,13 +204,10 @@
         img.onload = function () {
             ctx.drawImage(img, 0, 0);
             DOMURL.revokeObjectURL(url);
-
-            var imgURI = canvas
-                .toDataURL('image/png')
-                .replace('image/png', 'image/octet-stream');
-
-            triggerDownload(imgURI);
+            
+            callback(canvas);
         };
         img.src = url;
     }
+
 </script>
