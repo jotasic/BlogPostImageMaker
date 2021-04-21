@@ -5,11 +5,14 @@
 <head>
     <title>Blog Post Image Maker</title>
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+
 </head>
 
 <body>
     <heder>
         <h2>Simple Blog Post Image Maker</h2>
+        <p><a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjotasic.github.io%2FBlogPostImageMaker%2F&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+        </p>
     </heder>
     <br />
 
@@ -60,6 +63,7 @@
         </br>
 
         <button onclick="downloadImage()">Download</button>
+        <button onclick="copyImageToClipboard()">Copy</button>
     </div>
     <br />
 
@@ -147,6 +151,15 @@
 
 
     //https://stackoverflow.com/questions/28226677/save-inline-svg-as-jpeg-png-svg
+    function downloadImage() {
+        convertImageAfterAction(function(canvas) {
+            var imgURI = canvas
+                .toDataURL('image/png')
+                .replace('image/png', 'image/octet-stream');
+
+                triggerDownload(imgURI);
+        });
+    }
 
     function triggerDownload(imgURI) {
         var evt = new MouseEvent('click', {
@@ -164,14 +177,23 @@
     }
 
 
-    function downloadImage(){
-        var canvas = document.createElement("canvas");
+    function copyImageToClipboard() {
+        convertImageAfterAction(function (canvas) {
+            canvas.toBlob(function (blob) {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard.write([item]);
+            });
+        });
+    }
+
+
+    function convertImageAfterAction(callback) {
         var svg = document.getElementById("imagePreview");
+        var canvas = document.createElement("canvas");
 
         canvas.width = svg.getBoundingClientRect().width;
         canvas.height = svg.getBoundingClientRect().height;
 
-        console.log(svg.getBoundingClientRect().width);
         var ctx = canvas.getContext('2d');
 
         var data = (new XMLSerializer()).serializeToString(svg);
@@ -184,13 +206,10 @@
         img.onload = function () {
             ctx.drawImage(img, 0, 0);
             DOMURL.revokeObjectURL(url);
-
-            var imgURI = canvas
-                .toDataURL('image/png')
-                .replace('image/png', 'image/octet-stream');
-
-            triggerDownload(imgURI);
+            
+            callback(canvas);
         };
         img.src = url;
     }
+
 </script>
