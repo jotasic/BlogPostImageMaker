@@ -19,20 +19,20 @@
     <!-- text 설정 부분 -->
     <div class="textContentsArea" id="textContentsArea">
         <strong>Text:</strong></br>
-        <textarea id="textContents" rows="5" cols="100">Today, I Learned 🤔</textarea>
+        <textarea id="textContents" rows="5" cols="100"></textarea>
     </div>
     <br />
 
     <!-- 이미지 size 및 백그라운드 컬러 설정-->
     <div class="imageOptionArea" id="imageOptionArea">
         <label for="imageWidth">Width:</label>
-        <input type="number" id="imageWidth" value="700"> &nbsp;&nbsp;
+        <input type="number" id="imageWidth" > &nbsp;&nbsp;
 
         <label for="imageHeight">Height:</label>
-        <input type="number" id="imageHeight" value="350"> &nbsp;&nbsp;
+        <input type="number" id="imageHeight"> &nbsp;&nbsp;
 
         <label for="imageColor">Background:</label>
-        <input type="color" id="imageColor" value="#00C800"></br>
+        <input type="color" id="imageColor"></br>
 
     </div>
     <br />
@@ -40,10 +40,10 @@
     <!-- 폰트 관련 설정 부분 -->
     <div class="fontOptionArea" id="fontOptionArea">
         <label for="fontSize">Font Size:</label>
-        <input type="number" id="fontSize" value="40"> &nbsp;&nbsp;
+        <input type="number" id="fontSize"> &nbsp;&nbsp;
 
         <label for="fontColor">Font Color:</label>
-        <input type="color" id="fontColor" value="#FFFFFF">
+        <input type="color" id="fontColor">
     </div>
     <br />
 
@@ -81,7 +81,6 @@
     const imageHeight = document.getElementById('imageHeight');
     const imageColor = document.getElementById('imageColor');
     const contents = document.getElementById('textContents');
-
     const fontSize = document.getElementById('fontSize');
     const fontColor = document.getElementById('fontColor');
 
@@ -94,15 +93,39 @@
     fontSize.addEventListener("change", updateValue);
     fontColor.addEventListener("change", updateValue);
 
+
+    // Web Storage
+    const options = []
+    options.push(imageWidth);
+    options.push(imageHeight);
+    options.push(imageColor);
+    options.push(contents);
+    options.push(fontSize);
+    options.push(fontColor);
+
+
     // 이벤트 함수
     function updateValue(e) {
         drawCanvas();
+        updateData();
     }
 
     // 페이지가 로드시 실행
     window.onload = function () {
-
+        loadData();
         drawCanvas();
+
+    }
+
+
+    function updateData() {
+        options.forEach((item, index, array) => localStorage.setItem(item.id, item.value));
+    }
+
+
+
+    function loadData() {
+        options.forEach((item, index, array) => item.value = localStorage.getItem(item.id));
     }
 
 
