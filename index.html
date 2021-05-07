@@ -7,72 +7,123 @@
 </head>
 
 <body>
-    <heder>
-        <h2>Simple Blog Post Image Maker</h2>
-        <p><a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjotasic.github.io%2FBlogPostImageMaker%2F&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+
+    <heder class="ui center aligned basic segment">
+        <h1 class="ui header">Simple Blog Post Image Maker</h1>
+        <p><a href="https://hits.seeyoufarm.com"><img
+                    src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjotasic.github.io%2FBlogPostImageMaker%2F&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false" /></a>
         </p>
     </heder>
-    <br />
 
-    <!-- text 설정 부분 -->
-    <div class="textContentsArea" id="textContentsArea">
-        <strong>Text:</strong></br>
-        <textarea id="textContents" rows="5" cols="100"></textarea>
+
+    <div class="ui segment">
+        <div class="ui form">
+
+            <!-- text 설정 부분 -->
+            <h3 class="ui horizontal divider header">
+                <i class="pencil icon"></i>
+                Text
+            </h3>
+
+            <div class="field" id="textContentsArea">
+                <textarea id="textContents" rows="3" cols="50"></textarea>
+            </div>
+
+            <!-- 폰트 관련 설정 부분 -->
+            <h3 class="ui horizontal divider header">
+                <i class="font icon"></i>
+                Font
+            </h3>
+            <div class=" equal width fields">
+                <div class="field">
+                    <label>Size</label>
+                    <input class="ui input" ype="number" id="fontSize" placeholder="Font Size">
+                </div>
+
+                <div class="field">
+                    <label>Color</label>
+                    <input class="ui input" type="color" id="fontColor">
+                    <label id="fontColorLabel"></label>
+                </div>
+            </div>
+
+            <!-- 이미지 size 및 백그라운드 컬러 설정-->
+            <h3 class="ui horizontal divider header">
+                <i class="image outline icon"></i>
+                Background
+            </h3>
+
+            <div class="equal width fields" id="imageOptionArea">
+                <div class="field">
+                    <label>Width</label>
+                    <input class="ui input" type="number" id="imageWidth">
+                </div>
+
+                <div class="field">
+                    <label>Height</label>
+                    <input class="ui input" type="number" id="imageHeight">
+                </div>
+                <div class="field">
+                    <label>Color</label>
+                    <input class="ui input" type="color" id="imageColor">
+                    <label id="imageColorLabel"></label>
+                </div>
+            </div>
+
+
+            <!-- 미리보기 -->
+            <h3 class="ui horizontal divider header">
+                <i class="image icon"></i>
+                Preview
+            </h3>
+
+            <div class="field" id="previewArea">
+                <svg xmlns=http://www.w3.org/2000/svg xmlns:xlink="http://www.w3.org/1999/xlink" id="imagePreview"
+                    height="200" width="400">
+
+                    <rect width="100%" height="100%" fill="#ffffff" id="imageBackground" />
+
+
+                    <text id="imageText" dominant-baseline="middle" text-anchor="middle">
+                    </text>
+                    This browser doesn't support svg 🙅‍♂️
+                </svg>
+            </div>
+            <div class="fields">
+                <div class="field">
+                    <button class="ui button animated fade" onclick="downloadImage()">
+                        <div class="visible content">Download</div>
+                        <div class="hidden content">
+                            <i class="download icon"></i>
+                    </button>
+                </div>
+                <div class="field">
+                    <button class="ui button animated fade" onclick="copyImageToClipboard()">
+                        <div class="visible content">Copy</div>
+                        <div class="hidden content">
+                            <i class="copy icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-    <br />
 
-    <!-- 이미지 size 및 백그라운드 컬러 설정-->
-    <div class="imageOptionArea" id="imageOptionArea">
-        <label for="imageWidth">Width:</label>
-        <input type="number" id="imageWidth" > &nbsp;&nbsp;
-
-        <label for="imageHeight">Height:</label>
-        <input type="number" id="imageHeight"> &nbsp;&nbsp;
-
-        <label for="imageColor">Background:</label>
-        <input type="color" id="imageColor"></br>
-
-    </div>
-    <br />
-
-    <!-- 폰트 관련 설정 부분 -->
-    <div class="fontOptionArea" id="fontOptionArea">
-        <label for="fontSize">Font Size:</label>
-        <input type="number" id="fontSize"> &nbsp;&nbsp;
-
-        <label for="fontColor">Font Color:</label>
-        <input type="color" id="fontColor">
-    </div>
-    <br />
-
-    <!-- 미리보기 -->
-    <div class="previewArea" id="previewArea">
-        <strong>Preview:</strong></br>
-        <svg xmlns=http://www.w3.org/2000/svg xmlns:xlink="http://www.w3.org/1999/xlink" id="imagePreview" height="200"
-            width="400">
-
-            <rect width="100%" height="100%" fill="#ffffff" id="imageBackground" />
-
-
-            <text id="imageText" dominant-baseline="middle" text-anchor="middle">
-            </text>
-            This browser doesn't support svg 🙅‍♂️
-        </svg>
-        </br>
-
-        <button onclick="downloadImage()">Download</button>
-        <button onclick="copyImageToClipboard()">Copy</button>
-    </div>
-    <br />
-
-    <footer>
+    <footer class="ui center aligned basic segment">
         <a href="https://github.com/jotasic/BlogPostImageMaker/">Code</a> • Made by <a
             href="https://velog.io/@burnkim61">taewoo kim</a> • Powered By <a href="https://github.com">Github</a>
     </footer>
 
+
+
+
     <!-- https://velog.io/@takeknowledge/script-태그는-어디에-위치해야-할까요 -->
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
     <script src="./scripts/script.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="./styles/semantic-ui-css/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="./styles/semantic-ui-css/semantic.min.js"></script>
 </body>
 
 </html>

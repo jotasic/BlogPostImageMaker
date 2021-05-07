@@ -1,9 +1,12 @@
 const imageWidth = document.getElementById('imageWidth');
 const imageHeight = document.getElementById('imageHeight');
 const imageColor = document.getElementById('imageColor');
+const imageColorLabel = document.getElementById('imageColorLabel');
+
 const contents = document.getElementById('textContents');
 const fontSize = document.getElementById('fontSize');
 const fontColor = document.getElementById('fontColor');
+const fontColorLabel = document.getElementById('fontColorLabel');
 
 
 // 값이 변경시 updateValue 함수 호출 하도록 설정
@@ -25,17 +28,26 @@ options.push(fontSize);
 options.push(fontColor);
 
 
-// 이벤트 함수
 function updateValue(e) {
     drawCanvas();
+    showColorValue();
     updateData();
 }
+
+
 
 // 페이지가 로드시 실행
 window.onload = function () {
     loadData();
     drawCanvas();
+    showColorValue();
+    
+}
 
+
+function showColorValue() {
+    imageColorLabel.innerText = imageColor.value;
+    fontColorLabel.innerText = fontColor.value;
 }
 
 
