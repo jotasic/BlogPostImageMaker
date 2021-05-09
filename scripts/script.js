@@ -1,11 +1,11 @@
-const imageWidth = document.getElementById('imageWidth');
-const imageHeight = document.getElementById('imageHeight');
-const imageColor = document.getElementById('imageColor');
+const imageWidth      = document.getElementById('imageWidth');
+const imageHeight     = document.getElementById('imageHeight');
+const imageColor      = document.getElementById('imageColor');
 const imageColorLabel = document.getElementById('imageColorLabel');
 
-const contents = document.getElementById('textContents');
-const fontSize = document.getElementById('fontSize');
-const fontColor = document.getElementById('fontColor');
+const contents       = document.getElementById('textContents');
+const fontSize       = document.getElementById('fontSize');
+const fontColor      = document.getElementById('fontColor');
 const fontColorLabel = document.getElementById('fontColorLabel');
 
 
@@ -47,7 +47,7 @@ window.onload = function () {
 
 function showColorValue() {
     imageColorLabel.innerText = imageColor.value;
-    fontColorLabel.innerText = fontColor.value;
+    fontColorLabel.innerText  = fontColor.value;
 }
 
 
@@ -91,9 +91,9 @@ function drawCanvas() {
 
 function fillTextLine(el, text, x, y) {
 
-    var lines = text.split("\n");
+    var lines     = text.split("\n");
     var lineCount = lines.length;
-    var fontSize = el.font("size");
+    var fontSize  = el.font("size");
 
     // 여려줄일 시, 시작(맨 첫줄) y좌표값을 조절 하는 작업
     var offset = (lineCount - 1) * fontSize / 2;
@@ -119,8 +119,8 @@ function downloadImage() {
 
 function triggerDownload(imgURI) {
     var evt = new MouseEvent('click', {
-        view: window,
-        bubbles: false,
+        view      : window,
+        bubbles   : false,
         cancelable: true
     });
 
@@ -144,20 +144,20 @@ function copyImageToClipboard() {
 
 
 function convertImageAfterAction(callback) {
-    var svg = document.getElementById("imagePreview");
+    var svg    = document.getElementById("imagePreview");
     var canvas = document.createElement("canvas");
 
-    canvas.width = svg.getBoundingClientRect().width;
+    canvas.width  = svg.getBoundingClientRect().width;
     canvas.height = svg.getBoundingClientRect().height;
 
     var ctx = canvas.getContext('2d');
 
-    var data = (new XMLSerializer()).serializeToString(svg);
+    var data   = (new XMLSerializer()).serializeToString(svg);
     var DOMURL = window.URL || window.webkitURL || window;
 
-    var img = new Image();
+    var img     = new Image();
     var svgBlob = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
-    var url = DOMURL.createObjectURL(svgBlob);
+    var url     = DOMURL.createObjectURL(svgBlob);
 
     img.onload = function () {
         ctx.drawImage(img, 0, 0);
