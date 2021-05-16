@@ -19,11 +19,8 @@ contents.addEventListener("change", updateValue);
 fontSize.addEventListener("change", updateValue);
 fontColor.addEventListener("change", updateValue);
 
-
 fontColorPasteButton.addEventListener('click', pasteColorToBackground.bind(event, fontColor), false);
 imageColorPasteButton.addEventListener('click', pasteColorToBackground.bind(event, imageColor), false);
-
-
 
 // Web Storage
 const options = []
@@ -50,16 +47,54 @@ window.onload = function () {
     
 }
 
+
+const snackbar = document.getElementById('snackbar'); 
+let isToastShown = false;
+
+
+function showSnackbarMessage(message) {
+    if(snackbar.classList.contains('show')) {
+        return;
+    }
+
+    snackbar.innerText = message
+    snackbar.classList.add('show');
+    setTimeout(function () {
+        snackbar.classList.remove('show');
+    }, 2700);
+}
+
+
 //https://stackoverflow.com/questions/39193878/javascript-execcommandpaste-not-working/56034438#56034438
 //https://www.codegrepper.com/code-examples/javascript/javascript+pass+parameter+to+named+function+event+handler
 // https://stackoverflow.com/questions/10000083/javascript-event-handler-with-parameters
 function pasteColorToBackground(target, event) {
     navigator.clipboard.readText().then(function(text) { 
-        target.value = text;
+        if(isVaildColor(text)) {
+        target.value = "#" + text;
         updateValue(NaN);
-        console.log(text);
-        console.log(target);
+        }
+        else {
+            showSnackbarMessage("유효하지 않은 클립보드 입니다. (예시:FFFF00)");
+        }
     });
+}
+
+function isVaildColor(text) {
+    if(text.length == 6) {
+        for(let i = 0 ; i < text.length ; i++) {
+            if(!((text[i] >= 'a' && text[i] <= 'z') ||
+               (text[i] >= 'A' || text[i] <= 'Z') ||
+               (text[i] >= '0' || text[i] <= '9'))) {
+                   return false;
+               }
+        }
+        return true;
+    }
+    else {
+        return false;
+    }
+
 }
 
 function showColorValue() {
