@@ -2,11 +2,13 @@ const imageWidth      = document.getElementById('imageWidth');
 const imageHeight     = document.getElementById('imageHeight');
 const imageColor      = document.getElementById('imageColor');
 const imageColorLabel = document.getElementById('imageColorLabel');
+const imageColorPasteButton = document.getElementById('imageColorPasteButton');
 
 const contents       = document.getElementById('textContents');
 const fontSize       = document.getElementById('fontSize');
 const fontColor      = document.getElementById('fontColor');
 const fontColorLabel = document.getElementById('fontColorLabel');
+const fontColorPasteButton = document.getElementById('fontColorPasteButton');
 
 
 // 값이 변경시 updateValue 함수 호출 하도록 설정
@@ -16,6 +18,11 @@ imageColor.addEventListener("change", updateValue);
 contents.addEventListener("change", updateValue);
 fontSize.addEventListener("change", updateValue);
 fontColor.addEventListener("change", updateValue);
+
+
+fontColorPasteButton.addEventListener('click', pasteColorToBackground.bind(event, fontColor), false);
+imageColorPasteButton.addEventListener('click', pasteColorToBackground.bind(event, imageColor), false);
+
 
 
 // Web Storage
@@ -35,7 +42,6 @@ function updateValue(e) {
 }
 
 
-
 // 페이지가 로드시 실행
 window.onload = function () {
     loadData();
@@ -44,23 +50,30 @@ window.onload = function () {
     
 }
 
+//https://stackoverflow.com/questions/39193878/javascript-execcommandpaste-not-working/56034438#56034438
+//https://www.codegrepper.com/code-examples/javascript/javascript+pass+parameter+to+named+function+event+handler
+// https://stackoverflow.com/questions/10000083/javascript-event-handler-with-parameters
+function pasteColorToBackground(target, event) {
+    navigator.clipboard.readText().then(function(text) { 
+        target.value = text;
+        updateValue(NaN);
+        console.log(text);
+        console.log(target);
+    });
+}
 
 function showColorValue() {
     imageColorLabel.innerText = imageColor.value;
     fontColorLabel.innerText  = fontColor.value;
 }
 
-
 function updateData() {
     options.forEach((item, index, array) => localStorage.setItem(item.id, item.value));
 }
 
-
-
 function loadData() {
     options.forEach((item, index, array) => item.value = localStorage.getItem(item.id));
 }
-
 
 function drawCanvas() {
     var w = imageWidth.value;
