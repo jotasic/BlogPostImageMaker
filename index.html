@@ -26,7 +26,7 @@
             </h3>
 
             <div class="field" id="textContentsArea">
-                <textarea id="textContents" rows="3" cols="50"></textarea>
+                <input type="text" id="textContents"></input>
             </div>
 
             <!-- 폰트 관련 설정 부분 -->
@@ -37,7 +37,7 @@
             <div class=" equal width fields">
                 <div class="field">
                     <label>Size</label>
-                    <input class="ui input" ype="number" id="fontSize" placeholder="Font Size">
+                    <input class="ui input" type="number" id="fontSize" placeholder="Font Size" min="10" max="100">
                 </div>
 
                 <div class="field">
@@ -57,12 +57,12 @@
             <div class="equal width fields" id="imageOptionArea">
                 <div class="field">
                     <label>Width</label>
-                    <input class="ui input" type="number" id="imageWidth">
+                    <input class="ui input" type="number" id="imageWidth" min="100" max="1000">
                 </div>
 
                 <div class="field">
                     <label>Height</label>
-                    <input class="ui input" type="number" id="imageHeight">
+                    <input class="ui input" type="number" id="imageHeight" min="100" max="1000">
                 </div>
                 <div class="field">
                     <label>Color</label>
@@ -111,15 +111,10 @@
     </div>
 
     <div id="snackbar">snackbar Message</div>
-    
-
     <footer class="ui center aligned basic segment">
         <a href="https://github.com/jotasic/BlogPostImageMaker/">Code</a> • Made by <a
             href="https://velog.io/@burnkim61">taewoo kim</a> • Powered By <a href="https://github.com">Github</a>
     </footer>
-
-
-
 
     <!-- https://velog.io/@takeknowledge/script-태그는-어디에-위치해야-할까요 -->
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
