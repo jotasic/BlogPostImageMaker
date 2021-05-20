@@ -71,7 +71,10 @@ function showSnackbarMessage(message) {
 function pasteColorToBackground(target, event) {
     navigator.clipboard.readText().then(function(text) { 
         if(isVaildColor(text)) {
-        target.value = "#" + text;
+            if(text[0] != '#')
+                target.value = "#" + text;
+            else
+                target.value = text;
         updateValue(NaN);
         }
         else {
@@ -81,8 +84,12 @@ function pasteColorToBackground(target, event) {
 }
 
 function isVaildColor(text) {
-    if(text.length == 6) {
-        for(let i = 0 ; i < text.length ; i++) {
+    let startdIdx = 0;
+
+    if(text.length == 6 || text.length == 7){
+        startdIdx = text.length == 7 ? 1 : 0;
+
+        for(let i = startdIdx ; i < text.length ; i++) {
             if(!((text[i] >= 'a' && text[i] <= 'z') ||
                (text[i] >= 'A' || text[i] <= 'Z') ||
                (text[i] >= '0' || text[i] <= '9'))) {
@@ -90,8 +97,8 @@ function isVaildColor(text) {
                }
         }
         return true;
-    }
-    else {
+
+    }else {
         return false;
     }
 
