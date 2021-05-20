@@ -78,7 +78,7 @@ function pasteColorToBackground(target, event) {
         updateValue(NaN);
         }
         else {
-            showSnackbarMessage("유효하지 않은 클립보드 입니다. (예시:FFFF00)");
+            showSnackbarMessage("유효하지 않은 클립보드 입니다. (예시:FFFF00 or #FFFF00)");
         }
     });
 }
@@ -159,8 +159,6 @@ function fillTextLine(el, text, x, y) {
     });
 }
 
-
-
 //https://stackoverflow.com/questions/28226677/save-inline-svg-as-jpeg-png-svg
 function downloadImage() {
     convertImageAfterAction(function(canvas) {
@@ -216,7 +214,6 @@ function convertImageAfterAction(callback) {
     img.onload = function () {
         ctx.drawImage(img, 0, 0);
         DOMURL.revokeObjectURL(url);
-        
         callback(canvas);
     };
     img.src = url;
