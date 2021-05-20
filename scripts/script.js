@@ -90,7 +90,7 @@ function isVaildColor(text) {
         startdIdx = text.length == 7 ? 1 : 0;
 
         for(let i = startdIdx ; i < text.length ; i++) {
-            if(!((text[i] >= 'a' && text[i] <= 'F') ||
+            if(!((text[i] >= 'a' && text[i] <= 'f') ||
                (text[i] >= 'A' || text[i] <= 'F') ||
                (text[i] >= '0' || text[i] <= '9'))) {
                    return false;
