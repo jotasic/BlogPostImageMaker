@@ -187,7 +187,6 @@ function triggerDownload(imgURI) {
     a.dispatchEvent(evt);
 }
 
-
 function copyImageToClipboard() {
     convertImageAfterAction(function (canvas) {
         canvas.toBlob(function (blob) {
