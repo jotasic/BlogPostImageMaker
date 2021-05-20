@@ -16,7 +16,7 @@
     </heder>
 
 
-    <div class="ui segment">
+    <div class="ui segment container">
         <div class="ui form">
 
             <!-- text 설정 부분 -->
@@ -44,7 +44,11 @@
                     <label>Color</label>
                     <input class="ui input" type="color" id="fontColor">
                     <label id="fontColorLabel"></label>
-                    <button id="fontColorPasteButton">붙어넣기</button>
+                    <button class="ui button animated fade" id="fontColorPasteButton">
+                        <div class="visible content">붙여넣기</div>
+                        <div class="hidden content">
+                            <i class="paste icon"></i>
+                    </button>
                 </div>
             </div>
 
@@ -68,7 +72,11 @@
                     <label>Color</label>
                     <input class="ui input" type="color" id="imageColor">
                     <label id="imageColorLabel"></label>
-                    <button id="imageColorPasteButton">붙어넣기</button>
+                    <button class="ui button animated fade" id="imageColorPasteButton">
+                        <div class="visible content">붙여넣기</div>
+                        <div class="hidden content">
+                            <i class="paste icon"></i>
+                    </button>
                 </div>
             </div>
 
@@ -79,8 +87,8 @@
                 Preview
             </h3>
 
-            <div class="field" id="previewArea">
-                <svg xmlns=http://www.w3.org/2000/svg xmlns:xlink="http://www.w3.org/1999/xlink" id="imagePreview"
+            <div class="field ui center aligned grid" id="previewArea">
+                <svg  xmlns=http://www.w3.org/2000/svg xmlns:xlink="http://www.w3.org/1999/xlink" id="imagePreview"
                     height="200" width="400">
 
                     <rect width="100%" height="100%" fill="#ffffff" id="imageBackground" />
