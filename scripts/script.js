@@ -90,8 +90,8 @@ function isVaildColor(text) {
         startdIdx = text.length == 7 ? 1 : 0;
 
         for(let i = startdIdx ; i < text.length ; i++) {
-            if(!((text[i] >= 'a' && text[i] <= 'z') ||
-               (text[i] >= 'A' || text[i] <= 'Z') ||
+            if(!((text[i] >= 'a' && text[i] <= 'F') ||
+               (text[i] >= 'A' || text[i] <= 'F') ||
                (text[i] >= '0' || text[i] <= '9'))) {
                    return false;
                }
@@ -165,7 +165,6 @@ function downloadImage() {
         var imgURI = canvas
             .toDataURL('image/png')
             .replace('image/png', 'image/octet-stream');
-
             triggerDownload(imgURI);
     });
 }
@@ -181,7 +180,6 @@ function triggerDownload(imgURI) {
     a.setAttribute('download', 'MY_COOL_IMAGE.png');
     a.setAttribute('href', imgURI);
     a.setAttribute('target', '_blank');
-
     a.dispatchEvent(evt);
 }
 
