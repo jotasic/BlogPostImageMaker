@@ -84,15 +84,15 @@ function pasteColorToBackground(target, event) {
 }
 
 function isVaildColor(text) {
-    let startdIdx = 0;
+    let startedIdx = 0;
 
     if(text.length == 6 || text.length == 7){
-        startdIdx = text.length == 7 ? 1 : 0;
+        startedIdx = text.length == 7 ? 1 : 0;
 
-        for(let i = startdIdx ; i < text.length ; i++) {
+        for(let i = startedIdx ; i < text.length ; i++) {
             if(!((text[i] >= 'a' && text[i] <= 'f') ||
-               (text[i] >= 'A' || text[i] <= 'F') ||
-               (text[i] >= '0' || text[i] <= '9'))) {
+               (text[i] >= 'A' && text[i] <= 'F') ||
+               (text[i] >= '0' && text[i] <= '9'))) {
                    return false;
                }
         }
