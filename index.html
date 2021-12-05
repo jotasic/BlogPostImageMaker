@@ -88,7 +88,7 @@
             </h3>
 
             <div class="field ui center aligned grid" id="previewArea">
-                <svg  xmlns=http://www.w3.org/2000/svg xmlns:xlink="http://www.w3.org/1999/xlink" id="imagePreview"
+                <svg xmlns=http://www.w3.org/2000/svg xmlns:xlink="http://www.w3.org/1999/xlink" id="imagePreview"
                     height="200" width="400">
 
                     <rect width="100%" height="100%" fill="#ffffff" id="imageBackground" />
@@ -101,14 +101,15 @@
             </div>
             <div class="fields">
                 <div class="field">
-                    <button class="ui button animated fade" onclick="downloadImage()">
-                        <div class="visible content">Download</div>
+                    <button id="downloadImageButton" class="ui button animated fade">
+                        <div class=" visible content">Download
+                        </div>
                         <div class="hidden content">
                             <i class="download icon"></i>
                     </button>
                 </div>
                 <div class="field">
-                    <button class="ui button animated fade" onclick="copyImageToClipboard()">
+                    <button id="copyImageToClipboardButton" class="ui button animated fade">
                         <div class="visible content">Copy</div>
                         <div class="hidden content">
                             <i class="copy icon"></i>
@@ -125,8 +126,9 @@
     </footer>
 
     <!-- https://velog.io/@takeknowledge/script-태그는-어디에-위치해야-할까요 -->
-    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
-    <script src="./scripts/script.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script> -->
+    <script src="dist/index.js"></script>
+
 
     <link rel="stylesheet" type="text/css" href="./styles/semantic-ui-css/semantic.min.css">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"

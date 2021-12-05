@@ -5,3 +5,20 @@
 
 
 [Site](https://jotasic.github.io/BlogPostImageMaker/)
+
+## 추천 size
+- width : 800
+- height : 400
+
+
+## 실행방법
+
+1. 모듈 다운로드
+    ```bash
+    npm install
+    ```
+
+2. 빌드
+    ```bash
+    npm build
+    ```
