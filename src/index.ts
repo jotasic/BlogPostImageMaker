@@ -10,6 +10,7 @@ const imageColorPasteButton = document.getElementById('imageColorPasteButton');
 const contents = document.getElementById('textContents') as HTMLInputElement;
 const fontSize = document.getElementById('fontSize') as HTMLInputElement;
 const fontColor = document.getElementById('fontColor') as HTMLInputElement;
+
 const fontColorLabel = document.getElementById(
   'fontColorLabel'
 ) as HTMLLabelElement;
@@ -78,8 +79,7 @@ function setEventListener() {
 function pasteColorToBackground(target: any, event: any) {
   navigator.clipboard.readText().then(text => {
     if (isValidColor(text)) {
-      if (text[0] !== '#') target.value = '#' + text;
-      else target.value = text;
+      target.value = text[0] !== '#' ? '#' + text : text;
       updateValue(NaN);
     } else {
       showSnackbarMessage(
@@ -89,27 +89,9 @@ function pasteColorToBackground(target: any, event: any) {
   });
 }
 
-function isValidColor(text: string) {
-  let startedIdx = 0;
-
-  if (text.length === 6 || text.length === 7) {
-    startedIdx = text.length === 7 ? 1 : 0;
-
-    for (let i = startedIdx; i < text.length; i++) {
-      if (
-        !(
-          (text[i] >= 'a' && text[i] <= 'f') ||
-          (text[i] >= 'A' && text[i] <= 'F') ||
-          (text[i] >= '0' && text[i] <= '9')
-        )
-      ) {
-        return false;
-      }
-    }
-    return true;
-  } else {
-    return false;
-  }
+function isValidColor(text: string): boolean {
+  const regex = '^#?[a-fA-F0-9]{6}$';
+  return text.match(regex) !== null;
 }
 
 function showColorValue() {
