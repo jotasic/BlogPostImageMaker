@@ -67,7 +67,9 @@ const setEventListener = () => {
 };
 
 const loadLocalStorageData = () => {
-  optionElements.forEach(item => (item.value = localStorage.getItem(item.id)));
+  for (const el of optionElements) {
+    el.value = localStorage.getItem(el.id);
+  }
 };
 
 const updateColorTextValue = () => {
@@ -113,7 +115,9 @@ const valueChanged = () => {
 };
 
 const updateLocalStorageData = () => {
-  optionElements.forEach(item => localStorage.setItem(item.id, item.value));
+  for (const el of optionElements) {
+    localStorage.setItem(el.id, el.value);
+  }
 };
 
 //https://stackoverflow.com/questions/39193878/javascript-execcommandpaste-not-working/56034438#56034438
@@ -150,12 +154,12 @@ const drawTextToCanvas = (
   const offset = ((lines.length - 1) * fontSize) / 2;
 
   el.text((text: svgjs.Text) => {
-    lines.forEach((element, line) => {
+    for (const [index, line] of lines.entries()) {
       text
-        .tspan(element)
+        .tspan(line)
         .ax(drawInfo.x.toString())
-        .ay((drawInfo.y + line * fontSize - offset).toString());
-    });
+        .ay((drawInfo.y + index * fontSize - offset).toString());
+    }
   });
 };
 
