@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
 
-    const  :ImageProps = {
+    const props :ImageProps = {
       imageWidth: "800",
       imageHeight: "400",
       imageColor: "#ffffff",
